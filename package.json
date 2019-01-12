@@ -1,6 +1,6 @@
 {
   "name": "meeko",
-  "version": "1.7.23",
+  "version": "1.7.41",
   "description": "meeko自用函数",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "co-mocha": "*",
     "coveralls": "*",
     "istanbul": "*",
-    "mocha": "*",
+    "mocha": "^5.2.0",
     "standard": "*"
   },
   "standard": {
@@ -33,7 +33,8 @@
       "db"
     ],
     "ignore": [
-      "/lib/tpl.js"
+      "/lib/tpl.js",
+      "/lib/Snowflake.js"
     ]
   },
   "eslintConfig": {
