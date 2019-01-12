@@ -17,6 +17,10 @@ var b = {
   name: {
     desc: '节点名称'
   },
+  strSize: {
+    type: 'string',
+    size: [1, 10]
+  },
   url: {
     desc: '必须是url',
     reg: /^https?:\/\/[^/]+/
@@ -174,12 +178,18 @@ describe('checkParam的单元测试', function () {
     }
     assert.strictEqual(200, $.tools.checkParam(a, b).code, $.tools.checkParam(a, b).msg)
   })
+  it('stringSize测试:strSize', function () {
+    let a = {
+      strSize: 1587
+    }
+    assert.strictEqual(200, $.tools.checkParam(a, b).code, '被测试数据：' + JSON.stringify(a))
+  })
   it('string正则测试：url', function () {
     let a = {
       id: 1,
       url: 1
     }
-    assert.strictEqual(401, $.tools.checkParam(a, b).code,  '被测试数据：' + JSON.stringify(a))
+    assert.strictEqual(401, $.tools.checkParam(a, b).code, '被测试数据：' + JSON.stringify(a))
     a = {
       id: 1
     }
@@ -600,12 +610,12 @@ describe('checkParam的单元测试', function () {
       id: 1,
       array1: []
     }
-    assert.strictEqual(200, $.tools.checkParam(a, b).code,  '被测试数据：' + JSON.stringify(a))
+    assert.strictEqual(200, $.tools.checkParam(a, b).code, '被测试数据：' + JSON.stringify(a))
     a = {
       id: 1,
       array1: ['jjhh', '', '4r59ew5es4', '4445']
     }
-    assert.strictEqual(200, $.tools.checkParam(a, b).code,  '被测试数据：' + JSON.stringify(a))
+    assert.strictEqual(200, $.tools.checkParam(a, b).code, '被测试数据：' + JSON.stringify(a))
     a = {
       id: 1,
       array1: [123, 321, 55.2, 11]
@@ -615,7 +625,7 @@ describe('checkParam的单元测试', function () {
       id: 1,
       array1: [123, 321, 55, 11]
     }
-    assert.strictEqual(200, $.tools.checkParam(a, b).code,  '被测试数据：' + JSON.stringify(a))
+    assert.strictEqual(200, $.tools.checkParam(a, b).code, '被测试数据：' + JSON.stringify(a))
   })
   it('array2', function () {
     let a = {
