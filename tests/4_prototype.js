@@ -31,6 +31,7 @@ describe('Date原型扩展的单元测试', function () {
   it('date8', function () {
     assert.strictEqual('20151229', d1.date8())
     assert.strictEqual('20160102', d2.date8())
+    assert.strictEqual('2016-01-02', d2.date8('-'))
   })
   it('dateAdd年', function () {
     assert.strictEqual('2016-12-29 01:11:01', d1.dateAdd('y', 1).date2Str())
@@ -39,10 +40,13 @@ describe('Date原型扩展的单元测试', function () {
   it('dateAdd季度', function () {
     assert.strictEqual('2016-03-29 01:11:01', d1.dateAdd('q', 1).date2Str())
     assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('q', -1).date2Str())
+    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('q', 0).date2Str())
   })
   it('dateAdd月', function () {
-    assert.strictEqual('2016-01-29 01:11:01', d1.dateAdd('m', 1).date2Str())
-    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('m', -1).date2Str())
+    assert.strictEqual('2016-01-29 01:11:01', d1.dateAdd('M', 1).date2Str())
+    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('M', -1).date2Str())
+    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('M', 0).date2Str())
+    assert.strictEqual('2015-12-29 01:11:01', d1.offset('M', 0).date2Str())
   })
   it('dateAdd周', function () {
     assert.strictEqual('2016-01-05 01:11:01', d1.dateAdd('w', 1).date2Str())
@@ -57,8 +61,8 @@ describe('Date原型扩展的单元测试', function () {
     assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('h', -1).date2Str())
   })
   it('dateAdd分', function () {
-    assert.strictEqual('2015-12-29 01:12:01', d1.dateAdd('n', 1).date2Str())
-    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('n', -1).date2Str())
+    assert.strictEqual('2015-12-29 01:12:01', d1.dateAdd('m', 1).date2Str())
+    assert.strictEqual('2015-12-29 01:11:01', d1.dateAdd('m', -1).date2Str())
   })
   it('dateAdd秒', function () {
     assert.strictEqual('2015-12-29 01:11:02', d1.dateAdd('s', 1).date2Str())
@@ -147,6 +151,14 @@ describe('Number原型扩展的单元测试', function () {
   it('round', function () {
     assert.strictEqual(1.123457, 1.123456789.round(6))
     assert.strictEqual(1, 1.123456789.round(0))
+    assert.strictEqual(1, (1.123456789).round(0))
+    assert.strictEqual(1, (1).round(0))
+  })
+  it('isPrime', function () {
+    assert.strictEqual(true, (2).isPrime()) // 9007199254740881 安全数中最大的质数
+    assert.strictEqual(false, (4).isPrime())
+    assert.strictEqual(true, (13).isPrime())
+    assert.strictEqual(false, (15).isPrime())
   })
 })
 describe('Buffer原型扩展的单元测试', function () {

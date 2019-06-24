@@ -7,11 +7,30 @@
 
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/kongnet/meeko)
 
+[![meeko](https://img.shields.io/npm/dy/meeko.svg)](https://img.shields.io/npm/dy/meeko.svg)
+[![meeko](https://img.shields.io/npm/l/meeko.svg?style=popout)](https://img.shields.io/npm/l/meeko.svg?style=popout)
+[![meeko](https://img.shields.io/github/package-json/v/kongnet/meeko.svg?style=popout)](https://img.shields.io/github/package-json/v/kongnet/meeko.svg?style=popout)
+[![meeko](https://img.shields.io/github/commit-activity/y/kongnet/meeko.svg?style=popout)](https://img.shields.io/github/commit-activity/y/kongnet/meeko.svg?style=popout)
+
+[![meeko](https://img.shields.io/github/repo-size/kongnet/meeko.svg)](https://img.shields.io/github/repo-size/kongnet/meeko.svg)
+
+[![meeko](https://img.shields.io/sonar/https/sonarcloud.io/kongnet_meeko/tech_debt.svg)](https://img.shields.io/sonar/https/sonarcloud.io/kongnet_meeko/tech_debt.svg)
+[![meeko](https://img.shields.io/sonar/https/sonarcloud.io/kongnet_meeko/violations.svg?style=popout&format=long)](https://sonarcloud.io/dashboard?id=kongnet_meeko)
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=kongnet_meeko)](https://sonarcloud.io/dashboard?id=kongnet_meeko)
+
+## 安装
+``` js
+npm i meeko
+```
+## 全覆盖率测试
+``` js
+npm test
+```
 ## 开始你的征途 Start your way
 ``` js
 let $ = require('meeko')
 ```
-
 ## 数学函数 Math function
 * *intersect (a = [])* 交集
 ``` js
@@ -40,6 +59,40 @@ let $ = require('meeko')
 
 ![JSON color format](https://github.com/kongnet/meeko/raw/master/screenShot/jsonFormat.png)
 
+``` js
+let colWidth = [5, 10, 6]
+let data = [{ id: '1', b: 'aaa', c: 'cccc1' }, { id: '2', b: 'bbb', c: 'cccc2' }, { id: '3', b: 'ccc', c: 'cccc3' }]
+$.drawTable(data, colWidth)
+```
+
+![drawTable](https://github.com/kongnet/meeko/raw/master/screenShot/drawTable.png)
+
+## 命令行Spinner动画
+``` js
+
+let spinner = new $.Spinner('dots2')
+spinner.start()
+   // '⣾⣽⣻⢿⡿⣟⣯⣷'
+
+
+```
+## mock扩展
+``` js
+  genDatetime // 产生起始日期-终止日期中间的日期 形式为 YYYY-MM-DD hh:mm:ss genDatetime('2016-1-1' '2016-2-2')
+  genData // 产生 指定字符串中用到的字符 返回指定长度  genData('abcdefghijklmnopqrstuvwxyz',10)
+  genName // 随机返回2-3的人名
+  genCard // 随机返回形式合格的身份码
+  genIp // 随机ip地址
+  genUrl // 随机返回 中间随机长度的 url genUrl(5)
+  genPhone // 随机返回 中国手机号码
+  genColor // 随机范围 hex颜色 和 rgba颜色 genColor('rgba')
+  genWord // 返回指定长度的中文常用字
+  genText // 返回指定长度的随机句子 >10才会有，。 也占1个汉字
+  genConstellation // 随机返回星座
+  genBool // 随机返回0,1`@genBool`
+  genEnum // 随机范围 数组的一个值 genEnum([1,2,3,'5x'])
+```
+
 ## 颜色基本函数 Color basic function
 ``` js
 $.log($.c.dimr('dimred', backGroundColor[41-47], isUnderline))
@@ -49,25 +102,62 @@ $.log($.c.dimr('dimred', backGroundColor[41-47], isUnderline))
 yyyy/YYYY mm/MM ww/WW dd/DD hh/HH mm ss SS(毫秒) q(季度) X(unix秒)
 $.now().format('X')
 ```
+## 基础数据类型判断函数 Data type check
+* *isObj===isObject* 只接受对象型
+* *isStringt* 只接字符型
+``` js
+其他对象会强制转化为String
+注意,不要设置默认值,不是字符串,有长度len判断时会有风险
+```
+* *isBoolean* 只接受布尔型
+* *isBool* 泛布尔型
+``` js
+[0, 1, true, false, '0', '1', 'true', 'false']都可以
+```
+* *isNumber* 只接受浮点型，也不接受{},[]等内部转换
+* *isBigInt* 只接受bigInt型
+* *isArray* 只接受数组t型
+* *isNull* 只接受null型
+* *isUndefined* 只接受undefined型
+* *isRegExp* 只接受正则型
 
+* *isDecimal* 泛浮点型
+``` js
+[null, undefined, 正则, 布尔值, {}, []]不可以
+可以化为数值的字符串 可以, 但类似 '1x' 不可以
+```
+* *isInt 整型 isPInt 正整型 isNInt负整型*
+``` js
+同isDecimal 原则
+```
+* *isDate*
+``` js
+可以化为日期的字符串，日期型都可以。日期型没意义因为初始化就确定时间了,日期字
+符型必须有 “/” 或者 “-”
+#now() 作为默认值代表 当前时间
+```
+## checkParam
+``` js
+增加 enum类型，def不起作用 size设置不能为空,且为数组
+```
 
 ## 原型扩展 Array prototype
 * *remove (idx = 0, len = 1)*
 ``` js
 [1, 2, 3, 4, 5].remove(1,2) => [1,4,5]
 ```
-* *count()* 
+* *count()*
 ``` js
  ['A', 'B', 'B', 'C', 'A', 'D'].count() => {"A":2,"B":2,"C":1,"D":1}
 ```
-* *flatten()* 
+* *flatten()*
 ``` js
 [1, [2, [3, [4, 5], 6], 7], 8].flatten() => [1,2,3,4,5,6,7,8]
 ```
-* *orderBy()* 
+* *orderBy()*
 ``` js
 [{ name: 'A', age: 48 }, { name: 'B', age: 36 }, { name: 'C', age: 26 }]
-.orderBy(['age'],['asc']) 
+.orderBy(['age'],['asc'])
 => [{"name":"C","age":26},{"name":"B","age":36},{"name":"A","age":48}] 默认升序
 ```
 ## 原型扩展 String prototype
@@ -116,5 +206,8 @@ sequenceDiagram
     Note right of Bot: 人工智能核心代码
     用户B->>Bot: 在吗？
     Bot-->>用户B: 在!
-    Note right of Bot: 去除[啊吗嘛]等<br/>语气助词,?换成! 
+    Note right of Bot: 去除[啊吗嘛]等<br/>语气助词,?换成!
 ```
+
+https://gitmoji.carloscuesta.me/
+
